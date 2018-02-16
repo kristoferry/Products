@@ -5,19 +5,16 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
-
 import { IProduct } from './product';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ProductService {
-    // private _productUrl = './api/products/products.json';
-    // private _productUrl = 'http://192.168.1.208:8080/api/product/';
-    private _productUrl = 'http://172.28.48.35:8080/api/product/';
     
-    constructor(private _http: HttpClient) { }
+    constructor(private _httpClient: HttpClient) { }
 
     getProducts(): Observable<IProduct[]> {
-        return this._http.get<IProduct[]>(this._productUrl)
+        return this._httpClient.get<IProduct[]>(environment.productsUrl)
             .do(data => console.log('All: ' + JSON.stringify(data)))
             .catch(this.handleError);
     }
